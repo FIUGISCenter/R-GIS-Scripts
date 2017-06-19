@@ -1,0 +1,16 @@
+require (rgdal)
+require (data.table)
+require (foreign)
+
+# read data
+shape <- readOGR(dsn="c:/_data","name_of_the_shapefile")
+table <- read.csv(file="c:_data/file.csv", header=TRUE, sep=",")
+#Plot the shapefile. X11 to open a graphic device.
+x11(); plot (parcel)
+
+
+#JOIN Shapefile and CVS based on the column
+final  <- merge(x=shape, y=table, by.x="PRIMARY KEY", by.y="PRIMARY KEY", all.x=TRUE, all.y=TRUE)
+
+#Write the shapefile
+writeOGR(final, dsn='c:/_data', layer='name_of_the_final_shapefile', driver="ESRI Shapefile")
