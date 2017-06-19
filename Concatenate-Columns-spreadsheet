@@ -1,0 +1,23 @@
+require (data.table)
+require (rgdal)
+require(sp)
+library(gdata)
+require(XLConnect)
+
+
+infile <- "name_of_the_Excel_file"
+#Read a excel file
+wb = loadWorkbook(file="c:/_data/", infile, ".xlsx")
+df = readWorksheet(wb, sheet = 1, header = TRUE)
+
+#pasting the information os the column Address to Address_o
+df$Address_o <- df$Address
+
+#In the collumn Address, psate the information found in Address, City and add Florida, USA.
+df$Address <- paste(df$Address,", ",df$CITY,", Florida, USA")
+
+#paste all the information of the excel to a table
+table <- df
+
+#Save a table with all the information in CSV format.
+write.table(table, file=paste0("c:_data/", infile ,".csv"), sep=",", row.names=FALSE)
