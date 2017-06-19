@@ -1,0 +1,19 @@
+
+require (rgdal)
+require (data.table)
+parcel <- readOGR(dsn="c:_data","name_of_the_shapefile")
+
+#In the variable parcel, create a collumn named Type1 and whenever you find a value < 9 in the existing field DOR_U, add in Type1 the value "Residential.
+parcel$Type1 [parcel$DOR_U<9] <- "Residential"
+
+#Aggregate the information on DOR_U according to this parameters.
+parcel$Type1 [parcel$DOR_U>=10 & parcel$DOR_U<=39] <- "Commercial"
+parcel$Type1 [parcel$DOR_U>=40 & parcel$DOR_U<=49] <- "Industrial"
+parcel$Type1 [parcel$DOR_U>=50 & parcel$DOR_U<=69] <- "Agricultural"
+parcel$Type1 [parcel$DOR_U>=70 & parcel$DOR_U<=79] <- "Institutional"
+parcel$Type1 [parcel$DOR_U>=80 & parcel$DOR_U<=89] <- "Governmental"
+parcel$Type1 [parcel$DOR_U>=90 & parcel$DOR_U<=99] <- "Miscellaneous"
+head (parcel)
+attributes (parcel)
+str (parcel)
+x11(); plot(parcel)
